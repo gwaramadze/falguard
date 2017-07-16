@@ -1,5 +1,5 @@
-Falguard
-========
+Falguard |Build Status|
+=======================
 
 Falguard is a Python library that provides request validation helpers for
 `Falcon <https://falconframework.org/>`_ web framework. Falguard relies on Yelp's `bravado-core <https://github.com/Yelp/bravado-core>`_ library.
@@ -62,3 +62,6 @@ so it MUST accept relevant number of arguments, eg.
 
         def on_post(self, request, response, **validated):
             pass
+
+.. |Build Status| image:: https://travis-ci.org/gwaramadze/falguard.svg
+   :target: https://travis-ci.org/gwaramadze/falguard
