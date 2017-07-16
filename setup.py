@@ -1,4 +1,7 @@
-from setuptools import setup
+from distutils.core import setup
+
+with open('requirements.txt') as f:
+    install_requires = f.read().splitlines()
 
 setup(
     name='falguard',
@@ -10,10 +13,7 @@ setup(
     long_description=open('README.rst').read(),
     license='Apache 2.0',
     py_modules=['falguard'],
-    install_requires=[
-        'falcon>=1.1.0,<=2.0.0',
-        'bravado_core>=4.6.0,<=5.0.0',
-    ],
+    install_requires=install_requires,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
