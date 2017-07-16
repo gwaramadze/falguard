@@ -8,7 +8,7 @@ setup(
     url='https://github.com/gwaramadze/falguard',
     description='Falcon requests validation against OpenAPI (Swagger) schema',
     long_description=open('README.rst').read(),
-    license='MIT',
+    license='Apache 2.0',
     py_modules=['falguard'],
     install_requires=[
         'falcon>=1.1.0,<=2.0.0',
