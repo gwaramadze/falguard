@@ -1,0 +1,5 @@
+pytest
+pytest-pep8
+pytest-flakes
+pytest-cov
+webtest
