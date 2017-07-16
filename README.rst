@@ -10,6 +10,12 @@ Features
 * Error serialization compliant with `JSON:API <http://jsonapi.org/format/#error-objects>`_ specification
 * Validator may be used either as a hook or a middleware component
 
+Installation
+------------
+.. code:: bash
+
+    $ pip install falguard
+
 Usage
 -----
 Instantiate Validator with the path to OpenAPI specification...
