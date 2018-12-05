@@ -58,4 +58,6 @@ def middleware_app():
     api = falcon.API(middleware=validator)
     api.add_route('/tests', _CollectionResource())
     api.add_route('/tests/{test_id}', _ElementResource())
+    # add entry point not in the specs
+    api.add_route('/backdoor', _CollectionResource())
     return webtest.TestApp(api)

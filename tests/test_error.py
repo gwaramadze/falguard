@@ -75,4 +75,13 @@ def test_middleware_validation_error(
 
 
 def test_no_operation_found(middleware_app):
-    middleware_app.put('/tests', status=404)
+    middleware_app.put('/missing_tests', status=404)
+
+
+def test_undeclared_entrypoint(middleware_app):
+    middleware_app.put('/backdoor', status=404)
+
+
+def test_method_not_allowed(middleware_app):
+    response = middleware_app.put('/tests', status=405)
+    assert response.headers['Allow'] == 'GET, POST'
