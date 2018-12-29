@@ -1,3 +1,4 @@
+import functools
 import io
 import json
 
@@ -72,20 +73,18 @@ class Validator:
     def process_resource(self, request, response, resource, params):
         bravado_request = _BravadoRequest(request, params)
 
-        # uri exists when we reach this method
-        uri = request.uri_template
+        get_op = functools.partial(
+            self._spec.get_op_for_request,
+            path_pattern=request.uri_template,
+        )
 
-        operation = self._spec.get_op_for_request(
-            request.method, uri)
+        operation = get_op(request.method)
         if not operation:
             # The URI exists but the method is wrong.
             # So we are going to reply with an error 405.
             # Error 405 requires we provide the list of allowed methods
             # for this URI. If None is found, then we produce a 404 error.
-            allowed = [
-                method for method in falcon.HTTP_METHODS
-                if self._spec.get_op_for_request(method, uri)
-            ]
+            allowed = [m for m in falcon.HTTP_METHODS if get_op(m)]
             if allowed:
                 raise falcon.HTTPMethodNotAllowed(allowed)
             raise falcon.HTTPNotFound
