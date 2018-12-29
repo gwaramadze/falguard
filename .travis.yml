@@ -8,5 +8,5 @@ python:
   - 3.6
   - 3.7
 install:
-  - pip install .[tests]
+  - pip install -U .[tests]
 script: py.test --verbose --pep8 --flakes --cov falguard --cov-fail-under 100
