@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='falguard',
-    version='0.1',
+    version='0.2',
     author='Remy Gwaramadze',
     author_email='remy@gwaramadze.com',
     url='https://github.com/gwaramadze/falguard',
