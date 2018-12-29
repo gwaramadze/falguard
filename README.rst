@@ -1,5 +1,5 @@
-Falguard |travis| |codecov|
-===========================
+Falguard |travis| |codecov| |python-versions|
+=============================================
 
 Falguard is a Python library that provides request validation helpers for
 `Falcon <https://falconframework.org/>`_ web framework. Falguard relies on Yelp's `bravado-core <https://github.com/Yelp/bravado-core>`_ library.
@@ -74,3 +74,6 @@ so it MUST accept relevant number of arguments, eg.
 
 .. |codecov| image:: https://codecov.io/gh/gwaramadze/falguard/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/gwaramadze/falguard
+
+.. |python-versions| image:: https://img.shields.io/pypi/pyversions/falguard.svg
+    :target: https://pypi.org/project/falguard/
