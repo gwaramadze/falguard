@@ -18,8 +18,7 @@ setup(
         'tests': [
             'pytest',
             'pytest-cov',
-            'pytest-flakes',
-            'pytest-pep8',
+            'pytest-flake8',
             'webtest',
         ],
     },
