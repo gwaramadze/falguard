@@ -6,6 +6,5 @@ python:
   - "3.5"
   - "3.6"
 install:
-  - pip install .
-  - pip install -r requirements_dev.txt
+  - pip install .[tests]
 script: py.test
