@@ -9,4 +9,4 @@ python:
   - 3.7
 install:
   - pip install -U .[tests]
-script: py.test --verbose --pep8 --flakes --cov falguard --cov-fail-under 100
+script: py.test --verbose --flake8 --cov falguard --cov-fail-under 100
