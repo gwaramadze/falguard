@@ -10,3 +10,4 @@ python:
 install:
   - pip install -U .[tests]
 script: py.test --verbose --flake8 --cov falguard --cov-fail-under 100
+after_success: bash <(curl -s https://codecov.io/bash)
