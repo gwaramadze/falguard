@@ -1,11 +1,19 @@
 import functools
 import io
 import json
+import os
+import yaml
 
 from bravado_core.request import IncomingRequest, unmarshal_request
 from bravado_core.spec import Spec
 import falcon
 from jsonschema.exceptions import ValidationError
+
+DESERIALIZERS = {
+    '.json': json.loads,
+    '.yaml': yaml.load,
+    '.yml': yaml.load,
+}
 
 
 class _BravadoRequest(IncomingRequest):
@@ -61,10 +69,10 @@ class _HTTPBadRequest(falcon.HTTPBadRequest):
 
 
 class Validator:
-
     def __init__(self, spec_path):
+        _, ext = os.path.splitext(spec_path)
         with open(spec_path, 'r') as f:
-            spec_dict = json.loads(f.read())
+            spec_dict = DESERIALIZERS[ext](f.read())
         self._spec = Spec.from_dict(spec_dict, config={'use_models': False})
 
     def __call__(self, request, response, resource, params):

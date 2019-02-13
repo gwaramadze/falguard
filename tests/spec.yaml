@@ -1,0 +1,70 @@
+swagger: '2.0'
+info:
+  title: Falguard Tests
+  version: '0.1'
+paths:
+  /tests:
+    get:
+      description: GET
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: search
+          in: query
+          type: string
+          format: date
+          required: true
+    post:
+      description: POST
+      responses:
+        '201':
+          description: Created
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/Test'
+  '/tests/{test_id}':
+    parameters:
+      - $ref: '#/parameters/TestIdPathParam'
+    get:
+      description: GET
+      responses:
+        '200':
+          description: OK
+definitions:
+  Test:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        type: object
+        required:
+          - type
+        properties:
+          id:
+            type: integer
+          type:
+            type: string
+          attributes:
+            type: object
+            properties:
+              integer:
+                type: integer
+              float:
+                type: number
+              string:
+                type: string
+              boolean:
+                type: boolean
+              datetime:
+                type: string
+                format: date-time
+parameters:
+  TestIdPathParam:
+    name: test_id
+    in: path
+    type: integer
+    required: true

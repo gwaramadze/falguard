@@ -7,7 +7,11 @@ import webtest
 
 import falguard
 
-validator = falguard.Validator('tests/spec.json')
+VALIDATORS = [
+    falguard.Validator('tests/spec.json'),
+    falguard.Validator('tests/spec.yaml'),
+    falguard.Validator('tests/spec.yml'),
+]
 
 
 class _CollectionResource:
@@ -36,8 +40,9 @@ class _ElementResource:
         assert test_id == 7
 
 
-@pytest.fixture
-def decorator_app():
+@pytest.fixture(params=VALIDATORS)
+def decorator_app(request):
+    validator = request.param
 
     @falcon.before(validator)
     class _DecoratedCollectionResource(_CollectionResource):
@@ -53,8 +58,9 @@ def decorator_app():
     return webtest.TestApp(api)
 
 
-@pytest.fixture
-def middleware_app():
+@pytest.fixture(params=VALIDATORS)
+def middleware_app(request):
+    validator = request.param
     api = falcon.API(middleware=validator)
     api.add_route('/tests', _CollectionResource())
     api.add_route('/tests/{test_id}', _ElementResource())
