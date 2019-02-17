@@ -14,12 +14,14 @@ VALIDATORS = [
 ]
 
 
-class _CollectionResource:
+class _CollectionResource(object):
 
     def on_get(self, request, response, search):
+        # pylint: disable=unused-argument,no-self-use
         assert search == datetime.date(2016, 12, 20)
 
     def on_post(self, request, response, data):
+        # pylint: disable=unused-argument,no-self-use
         assert data == {
             'id': None,
             'type': 'tests',
@@ -34,9 +36,10 @@ class _CollectionResource:
         }
 
 
-class _ElementResource:
+class _ElementResource(object):
 
     def on_get(self, request, response, test_id):
+        # pylint: disable=unused-argument,no-self-use
         assert test_id == 7
 
 

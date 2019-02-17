@@ -59,6 +59,7 @@ CASES = [
 @pytest.mark.parametrize('method, url, params, data, detail, source', CASES)
 def test_decorator_validation_error(
         method, url, params, data, source, detail, decorator_app):
+    # pylint: disable=too-many-arguments
     result = getattr(decorator_app, method)(url, params or data, status=400)
     error = result.json['errors'][0]
     assert error['detail'] == detail
@@ -68,6 +69,7 @@ def test_decorator_validation_error(
 @pytest.mark.parametrize('method, url, params, data, detail, source', CASES)
 def test_middleware_validation_error(
         method, url, params, data, source, detail, middleware_app):
+    # pylint: disable=too-many-arguments,invalid-name
     result = getattr(middleware_app, method)(url, params or data, status=400)
     error = result.json['errors'][0]
     assert error['detail'] == detail

@@ -1,0 +1,11 @@
+[MESSAGES CONTROL]
+disable=duplicate-code,
+        fixme,
+        missing-docstring,
+        no-init,
+        too-few-public-methods,
+        useless-object-inheritance
+
+[BASIC]
+good-names=e,
+           f

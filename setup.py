@@ -19,6 +19,7 @@ setup(
             'pytest',
             'pytest-cov',
             'pytest-flake8',
+            'pytest-pylint',
             'webtest',
         ],
     },

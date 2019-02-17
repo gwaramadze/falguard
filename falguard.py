@@ -34,11 +34,11 @@ class _BravadoRequest(IncomingRequest):
         # TODO: not supported
         self.files = None
 
-    def json(self):
+    def json(self, **kwargs):
         return self.form
 
 
-class _JsonApiErrorResponseFormatter:
+class _JsonApiErrorResponseFormatter(object):
 
     def format(self, validation_error, obj_type):
         error = obj_type()
@@ -47,6 +47,7 @@ class _JsonApiErrorResponseFormatter:
         return {'errors': [error]}
 
     def _get_source(self, validation_error):
+        # pylint: disable=no-self-use
         path = '/'.join(validation_error.path)
         if path:
             return {'pointer': '/' + path}
@@ -68,7 +69,7 @@ class _HTTPBadRequest(falcon.HTTPBadRequest):
         return self._formatter.format(self._validation_error, obj_type)
 
 
-class Validator:
+class Validator(object):
     def __init__(self, spec_path):
         _, ext = os.path.splitext(spec_path)
         with open(spec_path, 'r') as f:
@@ -79,6 +80,7 @@ class Validator:
         self.process_resource(request, response, resource, params)
 
     def process_resource(self, request, response, resource, params):
+        # pylint: disable=unused-argument
         bravado_request = _BravadoRequest(request, params)
 
         get_op = functools.partial(
