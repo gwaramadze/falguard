@@ -18,7 +18,7 @@ Installation
 
 Usage
 -----
-Instantiate Validator with the path to OpenAPI specification...
+Instantiate Validator with the path to OpenAPI specification (both json and yaml are supported)...
 
 .. code:: python
 
