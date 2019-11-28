@@ -13,6 +13,9 @@ setup(
     install_requires=[
         'falcon>=1.1.0,<2.0.0',
         'bravado_core>=4.6.0,<6.0.0',
+
+        # Required for Python 3.6 and 3.7
+        'six>=1.12.0',
     ],
     extras_require={
         'tests': [
