@@ -8,7 +8,11 @@ python:
   - 3.6
   - 3.7
   - 3.8
+env:
+  - FALCON_VERSION=">=1.1.0,<2.0.0"
+  - FALCON_VERSION=">=2.0.0,<3.0.0"
 install:
-  - pip install -U .[tests]
+  - pip install falcon$FALCON_VERSION
+  - pip install .[tests]
 script: py.test --verbose --flake8 --pylint --cov falguard --cov-fail-under 100
 after_success: bash <(curl -s https://codecov.io/bash)
