@@ -7,7 +7,9 @@ import yaml
 from bravado_core.request import IncomingRequest, unmarshal_request
 from bravado_core.spec import Spec
 import falcon
+from falcon import HTTP_METHODS  # pylint: disable=no-name-in-module
 from jsonschema.exceptions import ValidationError
+
 
 DESERIALIZERS = {
     '.json': json.loads,
@@ -57,7 +59,7 @@ class _JsonApiErrorResponseFormatter(object):
         return {'pointer': ''}
 
 
-class _HTTPBadRequest(falcon.HTTPBadRequest):
+class _HTTPBadRequest(falcon.errors.HTTPBadRequest):
 
     _formatter = _JsonApiErrorResponseFormatter()
 
@@ -94,10 +96,10 @@ class Validator(object):
             # So we are going to reply with an error 405.
             # Error 405 requires we provide the list of allowed methods
             # for this URI. If None is found, then we produce a 404 error.
-            allowed = [m for m in falcon.HTTP_METHODS if get_op(m)]
+            allowed = [m for m in HTTP_METHODS if get_op(m)]
             if allowed:
-                raise falcon.HTTPMethodNotAllowed(allowed)
-            raise falcon.HTTPNotFound
+                raise falcon.errors.HTTPMethodNotAllowed(allowed)
+            raise falcon.errors.HTTPNotFound
 
         try:
             validated = unmarshal_request(bravado_request, operation)
