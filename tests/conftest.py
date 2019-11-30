@@ -8,9 +8,9 @@ import webtest
 import falguard
 
 VALIDATORS = [
-    falguard.Validator('tests/spec.json'),
-    falguard.Validator('tests/spec.yaml'),
-    falguard.Validator('tests/spec.yml'),
+    falguard.Validator('tests/specs/spec.json'),
+    falguard.Validator('tests/specs/spec.yaml'),
+    falguard.Validator('tests/specs/spec.yml'),
 ]
 
 
