@@ -26,7 +26,8 @@ class _BravadoRequest(IncomingRequest):
         self.headers = falcon_request.headers
 
         # Non-reusable Falcon stream is replaced with reusable alternative
-        falcon_request.stream = io.BytesIO(falcon_request.bounded_stream.read())
+        falcon_request.stream = io.BytesIO(
+            falcon_request.bounded_stream.read())
         data = falcon_request.stream.getvalue().decode()
         try:
             self.form = json.loads(data)
