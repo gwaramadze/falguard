@@ -2,8 +2,8 @@ import datetime
 from dateutil.tz import tzoffset
 
 import falcon
+from falcon import testing
 import pytest
-import webtest
 
 import falguard
 
@@ -58,7 +58,7 @@ def decorator_app(request):
     api = falcon.API()
     api.add_route('/tests', _DecoratedCollectionResource())
     api.add_route('/tests/{test_id}', _DecoratedElementResource())
-    return webtest.TestApp(api)
+    return testing.TestClient(api)
 
 
 @pytest.fixture(params=VALIDATORS)
@@ -69,4 +69,4 @@ def middleware_app(request):
     api.add_route('/tests/{test_id}', _ElementResource())
     # add entry point not in the specs
     api.add_route('/backdoor', _CollectionResource())
-    return webtest.TestApp(api)
+    return testing.TestClient(api)

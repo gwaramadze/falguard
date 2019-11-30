@@ -1,89 +1,97 @@
+import json
 from collections import namedtuple
 
 import pytest
 
 Case = namedtuple(
-    'Case', ['method', 'url', 'params', 'data', 'detail', 'source'])
+    'Case', ['method', 'url', 'params', 'body', 'detail', 'source'])
 
 CASES = [
     Case(
-        method='get',
+        method='simulate_get',
         url='/tests/non-integer-string',
-        data=None,
+        body=None,
         params=None,
         detail="'non-integer-string' is not of type 'integer'",
         source={'parameter': 'test_id'},
     ),
     Case(
-        method='get',
+        method='simulate_get',
         url='/tests',
         params=None,
-        data={},
+        body='{}',
         detail='search is a required parameter.',
         source={'parameter': 'search'},
     ),
     Case(
-        method='get',
+        method='simulate_get',
         url='/tests',
         params={'search': 'non-date-format-string'},
-        data=None,
+        body=None,
         detail="'non-date-format-string' is not a 'date'",
         source={'parameter': 'search'},
     ),
     Case(
-        method='post_json',
+        method='simulate_post',
         url='/tests',
         params=None,
-        data={},
+        body='{}',
         detail="'data' is a required property",
         source={'pointer': ''},
     ),
     Case(
-        method='post_json',
+        method='simulate_post',
         url='/tests',
         params=None,
-        data={
+        body=json.dumps({
             'data': {
                 'type': 'test',
                 'attributes': {
                     'datetime': 'non-datetime-string',
                 },
             },
-        },
+        }),
         detail="'non-datetime-string' is not a 'date-time'",
         source={'pointer': '/data/attributes/datetime'},
     ),
 ]
 
 
-@pytest.mark.parametrize('method, url, params, data, detail, source', CASES)
+@pytest.mark.parametrize('method, url, params, body, detail, source', CASES)
 def test_decorator_validation_error(
-        method, url, params, data, source, detail, decorator_app):
+        method, url, params, body, source, detail, decorator_app):
     # pylint: disable=too-many-arguments
-    result = getattr(decorator_app, method)(url, params or data, status=400)
+    handler = getattr(decorator_app, method)
+    result = handler(url, body=body, params=params)
+    assert result.status_code == 400
     error = result.json['errors'][0]
     assert error['detail'] == detail
     assert error['source'] == source
 
 
-@pytest.mark.parametrize('method, url, params, data, detail, source', CASES)
+@pytest.mark.parametrize('method, url, params, body, detail, source', CASES)
 def test_middleware_validation_error(
-        method, url, params, data, source, detail, middleware_app):
+        method, url, params, body, source, detail, middleware_app):
     # pylint: disable=too-many-arguments,invalid-name
-    result = getattr(middleware_app, method)(url, params or data, status=400)
+    handler = getattr(middleware_app, method)
+    result = handler(url, body=body, params=params)
+    assert result.status_code == 400
     error = result.json['errors'][0]
     assert error['detail'] == detail
     assert error['source'] == source
 
 
 def test_no_operation_found(middleware_app):
-    middleware_app.put('/missing_tests', status=404)
+    result = middleware_app.simulate_put('/missing_tests')
+    assert result.status_code == 404
 
 
 def test_undeclared_entrypoint(middleware_app):
-    middleware_app.put('/backdoor', status=404)
+    result = middleware_app.simulate_put('/backdoor')
+    assert result.status_code == 404
 
 
 def test_method_not_allowed(middleware_app):
-    response = middleware_app.put('/tests', status=405)
-    assert response.headers['Allow'] == 'GET, POST'
+    result = middleware_app.simulate_put('/tests')
+    assert result.status_code == 405
+    assert result.headers['Allow'] == 'GET, POST'
