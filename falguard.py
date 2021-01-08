@@ -51,7 +51,7 @@ class _JsonApiErrorResponseFormatter(object):
 
     def _get_source(self, validation_error):
         # pylint: disable=no-self-use
-        path = '/'.join(validation_error.path)
+        path = '/'.join(map(str, validation_error.path))
         if path:
             return {'pointer': '/' + path}
         parameter = validation_error.schema.get('name')

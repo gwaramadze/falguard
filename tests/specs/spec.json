@@ -15,6 +15,14 @@
                 },
                 "parameters": [
                     {
+                        "name": "clients",
+                        "in": "query",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "name": "search",
                         "in": "query",
                         "type": "string",

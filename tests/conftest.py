@@ -16,7 +16,7 @@ VALIDATORS = [
 
 class _CollectionResource(object):
 
-    def on_get(self, request, response, search):
+    def on_get(self, request, response, search, clients):
         # pylint: disable=unused-argument,no-self-use
         assert search == datetime.date(2016, 12, 20)
 

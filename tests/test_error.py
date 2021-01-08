@@ -26,6 +26,14 @@ CASES = [
     Case(
         method='simulate_get',
         url='/tests',
+        params={'clients': [5, 'non-integer-string'], 'search': '2016-12-20'},
+        body=None,
+        detail="'non-integer-string' is not of type 'integer'",
+        source={'pointer': '/1'},
+    ),
+    Case(
+        method='simulate_get',
+        url='/tests',
         params={'search': 'non-date-format-string'},
         body=None,
         detail="'non-date-format-string' is not a 'date'",
