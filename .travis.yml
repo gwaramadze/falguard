@@ -8,6 +8,7 @@ python:
   - 3.6
   - 3.7
   - 3.8
+  - 3.9
 env:
   - FALCON_VERSION=">=1.1.0,<2.0.0"
   - FALCON_VERSION=">=2.0.0,<3.0.0"
