@@ -16,6 +16,9 @@ setup(
 
         # Required for Python 3.6 and 3.7
         'six>=1.12.0',
+
+        # Required for Python 3.4
+        'PyYAML<5.3;python_version="3.4"',
     ],
     extras_require={
         'tests': [
