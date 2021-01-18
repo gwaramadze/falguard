@@ -65,6 +65,7 @@ class _HTTPBadRequest(falcon.errors.HTTPBadRequest):
     _formatter = _JsonApiErrorResponseFormatter()
 
     def __init__(self, validation_error):
+        # pylint: disable=super-with-arguments
         super(_HTTPBadRequest, self).__init__()
         self._validation_error = validation_error
 
@@ -104,6 +105,7 @@ class Validator(object):
 
         try:
             validated = unmarshal_request(bravado_request, operation)
+        # pylint: disable=raise-missing-from
         except ValidationError as e:
             raise _HTTPBadRequest(e)
         else:
