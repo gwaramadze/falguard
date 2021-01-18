@@ -13,8 +13,8 @@ from jsonschema.exceptions import ValidationError
 
 DESERIALIZERS = {
     '.json': json.loads,
-    '.yaml': yaml.load,
-    '.yml': yaml.load,
+    '.yaml': yaml.safe_load,
+    '.yml': yaml.safe_load,
 }
 
 
